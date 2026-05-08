@@ -12,6 +12,6 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MVA_PLATFORM_PRODUCTION }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_THREADGENIUS_8F84W }}'
           channelId: live
-          projectId: mva-platform-production
+          projectId: threadgenius-8f84w
