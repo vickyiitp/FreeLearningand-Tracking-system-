@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0A0A0A;
+  --foreground: #E2E8F0;
+  --surface: #161616;
+  --primary: #CD7F32; /* Bronze */
+  --primary-hover: #E3A869;
+  --secondary: #4A5568; /* Slate */
+  --accent: #B87333;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-bronze: var(--primary);
+  --color-bronze-hover: var(--primary-hover);
+  --color-slate: var(--secondary);
+  
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "Fira Code", monospace;
+
+  --animate-float: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, .font-artistic {
+  font-family: var(--font-serif);
+}
+
+.glass {
+  background: rgba(22, 22, 22, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(205, 127, 50, 0.1);
+}
+
+.bronze-gradient {
+  background: linear-gradient(135deg, #B87333 0%, #CD7F32 50%, #8B4513 100%);
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #CD7F32, #E3A869);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

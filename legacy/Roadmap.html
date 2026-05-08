@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Engineer: 4-Year Degree Sandbox</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        stanford: {
+                            red: '#8C1515',
+                            dark: '#171717',
+                            black: '#0a0a0a',
+                            gold: '#B26F16'
+                        },
+                        surface: '#1f1f1f',
+                        success: '#10b981'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                        serif: ['Georgia', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;600;700;900&display=swap');
+
+        body {
+            background-color: #0a0a0a;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        details>summary {
+            list-style: none;
+        }
+
+        details>summary::-webkit-details-marker {
+            display: none;
+        }
+
+        details[open] summary~* {
+            animation: sweep .4s ease-in-out;
+        }
+
+        @keyframes sweep {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px)
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .task-checkbox:checked+div {
+            opacity: 0.4;
+            transition: all 0.3s;
+        }
+
+        .task-checkbox:checked+div .day-title {
+            text-decoration: line-through;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #8C1515;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B26F16;
+        }
+
+        .track-tab.active {
+            border-bottom-color: #8C1515;
+            color: #fff;
+            background: rgba(140, 21, 21, 0.1);
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-stanford-red selection:text-white pb-32">
+
+    <!-- Header & Ground Zero Setup -->
+    <header
+        class="pt-16 pb-8 px-6 border-b border-neutral-800 bg-gradient-to-b from-neutral-900 to-stanford-black relative">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-stanford-red/10 rounded-full blur-[100px] pointer-events-none">
+        </div>
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div
+                class="inline-flex items-center gap-2 px-4 py-1.5 mb-4 rounded border border-stanford-gold/30 bg-stanford-gold/10 text-stanford-gold text-xs font-bold tracking-[0.2em] uppercase">
+                <i data-lucide="graduation-cap" class="w-4 h-4"></i> CS / AI / Cyber Degree Program
+            </div>
+            <h1 class="text-4xl md:text-6xl font-serif font-bold mb-4 tracking-tight text-white">
+                The <span class="text-stanford-red">Master</span> Syllabus.
+            </h1>
+
+            <div class="bg-neutral-900 border border-neutral-700 rounded-xl p-6 mb-6">
+                <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                    <i data-lucide="terminal" class="w-5 h-5 text-blue-500"></i> Ground Zero Setup (Do this before
+                    starting Track 1)
+                </h3>
+                <div class="grid md:grid-cols-2 gap-4 text-sm font-mono text-neutral-300">
+                    <div class="bg-black p-3 rounded border border-neutral-800">
+                        <span class="text-blue-400">1. Install VS Code:</span> code.visualstudio.com<br>
+                        <span class="text-blue-400">2. Install Node.js:</span> nodejs.org (LTS)<br>
+                        <span class="text-blue-400">3. Install Python:</span> python.org (Tick "Add to PATH" during
+                        install)
+                    </div>
+                    <div class="bg-black p-3 rounded border border-neutral-800">
+                        <span class="text-green-400"># Open VS Code -> Press Ctrl+` to open Terminal</span><br>
+                        mkdir my-degree<br>
+                        cd my-degree<br>
+                        <span class="text-neutral-600">// You are now ready. Select Track 1 below.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="sticky top-0 z-50 bg-black/90 backdrop-blur border-b border-neutral-800 overflow-x-auto">
+        <div class="max-w-7xl mx-auto px-6 flex items-center gap-2 min-w-max" id="track-tabs">
+            <!-- Tabs injected via JS -->
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        <div id="curriculum-container" class="space-y-16">
+            <!-- Content injected via JS -->
+        </div>
+    </main>
+
+    <script>
+        // MASTER 4-YEAR DEGREE DATA STRUCTURE
+        const degreeTracks = [
+            {
+                id: "track-1",
+                icon: "globe",
+                title: "Track 1: Full-Stack Web & AI Integrations",
+                description: "Start from absolute zero. Learn terminal, HTML/CSS, React, Node.js, and how to hook up OpenAI/Claude APIs to build intelligent web apps.",
+                modules: [
+                    {
+                        title: "Module 1: Absolute Foundations (Zero to One)",
+                        days: [
+                            {
+                                dayNum: 1,
+                                title: "The Terminal, Git & HTML5",
+                                hours: [
+                                    { time: "08:00 - 10:00", type: "Theory", desc: "How computers work. What is a GUI vs CLI. Introduction to HTML structure." },
+                                    { time: "10:00 - 13:00", type: "Video", desc: "SuperSimpleDev: HTML & CSS Full Course (first 3 hours)." },
+                                    { time: "14:00 - 16:00", type: "Lab", desc: "Mastering CLI commands: cd, mkdir, ls, touch, rm." },
+                                    { time: "16:00 - 18:00", type: "Project", desc: "Build your first raw HTML website and version control it with Git." }
+                                ],
+                                videos: [
+                                    { title: "HTML & CSS Full Course", channel: "SuperSimpleDev", url: "https://www.youtube.com/watch?v=G3e-cpL7ofc" },
+                                    { title: "Git and GitHub for Beginners", channel: "FreeCodeCamp", url: "https://www.youtube.com/watch?v=RGOj5yH7evk" }
+                                ],
+                                docs: [{ title: "MDN: Introduction to HTML", url: "https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML" }],
+                                practice: {
+                                    platform: "VS Code Terminal",
+                                    task: "Create a project, initialize git, write HTML, and commit.",
+                                    code: "mkdir web-basics && cd web-basics\ngit init\ntouch index.html\n# Write HTML boilerplate using '!' in VS Code\ngit add .\ngit commit -m 'Initial commit'"
+                                },
+                                checklist: ["Can navigate PC using terminal.", "Understand Git commits.", "Built a basic HTML page."]
+                            },
+                            {
+                                dayNum: 2,
+                                title: "JavaScript Engines & The DOM",
+                                hours: [
+                                    { time: "08:00 - 11:00", type: "Theory", desc: "Variables, Functions, Arrays, Objects. How the V8 engine reads JS." },
+                                    { time: "11:00 - 14:00", type: "Video", desc: "Namaste JavaScript by Akshay Saini (Execution Context, Hoisting)." },
+                                    { time: "14:00 - 18:00", type: "Project", desc: "Build an interactive To-Do list using vanilla JS and DOM manipulation." }
+                                ],
+                                videos: [
+                                    { title: "Namaste JavaScript (Execution Context)", channel: "Akshay Saini", url: "https://www.youtube.com/watch?v=iLWTnMzWtj4" }
+                                ],
+                                docs: [{ title: "Javascript.info: The DOM", url: "https://javascript.info/document" }],
+                                practice: {
+                                    platform: "VS Code",
+                                    task: "Manipulate the DOM.",
+                                    code: "const btn = document.createElement('button');\nbtn.innerText = 'Click Me';\ndocument.body.appendChild(btn);\nbtn.addEventListener('click', () => alert('Done!'));"
+                                },
+                                checklist: ["Understand Hoisting.", "Can write functions & loops.", "Manipulated DOM via JS."]
+                            }
+                        ]
+                    },
+                    {
+                        title: "Module 2: Modern React & Next.js Ecosystem",
+                        days: [
+                            {
+                                dayNum: 3,
+                                title: "React Components & State",
+                                hours: [
+                                    { time: "08:00 - 10:00", type: "Theory", desc: "The Virtual DOM. Components vs Functions. JSX Syntax." },
+                                    { time: "10:00 - 14:00", type: "Video", desc: "React Docs Beta Tutorial / Fireship React in 100s." },
+                                    { time: "14:00 - 18:00", type: "Lab", desc: "Build a stateful Weather App using React and the Fetch API." }
+                                ],
+                                videos: [{ title: "React Course - Beginner's Tutorial", channel: "FreeCodeCamp", url: "https://www.youtube.com/watch?v=bMknfKXIFA8" }],
+                                docs: [{ title: "React.dev: Quick Start", url: "https://react.dev/learn" }],
+                                practice: {
+                                    platform: "Terminal (Vite)",
+                                    task: "Scaffold a React app and use useState.",
+                                    code: "npm create vite@latest my-react-app -- --template react\ncd my-react-app\nnpm install\nnpm run dev"
+                                },
+                                checklist: ["Understand Virtual DOM.", "Mastered useState and useEffect."]
+                            }
+                        ]
+                    },
+                    {
+                        title: "Module 3: Full Stack Backend & AI Integration",
+                        days: [
+                            {
+                                dayNum: 4,
+                                title: "Node.js, Express & MongoDB",
+                                hours: [
+                                    { time: "08:00 - 12:00", type: "Theory", desc: "Building REST APIs. Mongoose Schemas. Middleware." },
+                                    { time: "12:00 - 18:00", type: "Project", desc: "Build a backend CRUD API with Express and connect to MongoDB Atlas." }
+                                ],
+                                videos: [{ title: "Node.js and Express.js - Full Course", channel: "FreeCodeCamp", url: "https://www.youtube.com/watch?v=Oe421EPjeBE" }],
+                                docs: [{ title: "Express.js Routing", url: "https://expressjs.com/en/guide/routing.html" }],
+                                practice: {
+                                    platform: "Terminal",
+                                    task: "Init Node app and install Express.",
+                                    code: "npm init -y\nnpm i express mongoose cors dotenv\ntouch server.js"
+                                },
+                                checklist: ["Built a REST API.", "Connected to a NoSQL Database."]
+                            },
+                            {
+                                dayNum: 5,
+                                title: "Connecting the AI (OpenAI API / LangChain)",
+                                hours: [
+                                    { time: "08:00 - 11:00", type: "Theory", desc: "How LLM APIs work. Prompt Engineering. LangChain Basics." },
+                                    { time: "11:00 - 18:00", type: "Project", desc: "Integrate OpenAI API into your Node backend to create an AI-powered code reviewer app." }
+                                ],
+                                videos: [{ title: "How to Use OpenAI API with Node JS", channel: "United Top Tech", url: "https://www.youtube.com/watch?v=L9VRxKT-hXc" }],
+                                docs: [{ title: "OpenAI Node SDK", url: "https://github.com/openai/openai-node" }],
+                                practice: {
+                                    platform: "Node.js Backend",
+                                    task: "Make your first LLM API call.",
+                                    code: "npm i openai\n// Import, set API Key, call chat.completions.create()"
+                                },
+                                checklist: ["Successfully generated AI text via API.", "Secured API keys in .env file."]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "track-2",
+                icon: "cpu",
+                title: "Track 2: Adv. AI, ML & Data Analytics",
+                description: "Go beyond API calls. Learn the math behind AI, train Neural Networks from scratch, and master Data Analytics with Python.",
+                modules: [
+                    {
+                        title: "Module 1: Data Science Stack & Math",
+                        days: [
+                            {
+                                dayNum: 1,
+                                title: "Python, NumPy & Pandas",
+                                hours: [
+                                    { time: "08:00 - 12:00", type: "Theory", desc: "Vectorization. Why Python is used for AI. DataFrames." },
+                                    { time: "12:00 - 18:00", type: "Lab", desc: "Clean and analyze a 100k row dataset from Kaggle using Pandas." }
+                                ],
+                                videos: [{ title: "Data Analysis with Python", channel: "FreeCodeCamp", url: "https://www.youtube.com/watch?v=r-uOLxNrNk8" }],
+                                docs: [{ title: "Pandas Documentation", url: "https://pandas.pydata.org/docs/" }],
+                                practice: {
+                                    platform: "Jupyter Notebook",
+                                    task: "Load a CSV and find correlations.",
+                                    code: "pip install jupyter pandas numpy\njupyter notebook\nimport pandas as pd\ndf = pd.read_csv('data.csv')\ndf.describe()"
+                                },
+                                checklist: ["Mastered Pandas DataFrames.", "Can clean missing data."]
+                            },
+                            {
+                                dayNum: 2,
+                                title: "Calculus & Gradient Descent",
+                                hours: [
+                                    { time: "08:00 - 12:00", type: "Theory", desc: "Derivatives, Chain Rule, Cost Functions." },
+                                    { time: "12:00 - 18:00", type: "Lab", desc: "Write Gradient Descent from absolute scratch using math formulas in pure Python." }
+                                ],
+                                videos: [{ title: "Gradient Descent, Step-by-Step", channel: "StatQuest", url: "https://www.youtube.com/watch?v=sDv4f4s2SB8" }],
+                                docs: [{ title: "Understanding Backpropagation", url: "http://neuralnetworksanddeeplearning.com/chap2.html" }],
+                                practice: {
+                                    platform: "Python",
+                                    task: "Code the math.",
+                                    code: "def gradient_descent(x, y, lr, epochs):\n  # m = m - lr * d/dm \n  # Implement mathematical derivative here"
+                                },
+                                checklist: ["Understand Local Minima.", "Coded Gradient Descent."]
+                            }
+                        ]
+                    },
+                    {
+                        title: "Module 2: Deep Learning & NLP",
+                        days: [
+                            {
+                                dayNum: 3,
+                                title: "PyTorch & Neural Networks",
+                                hours: [
+                                    { time: "08:00 - 12:00", type: "Theory", desc: "Tensors, Autograd, Forward/Backward Passes." },
+                                    { time: "12:00 - 18:00", type: "Project", desc: "Build an Image Classifier (CNN) using PyTorch." }
+                                ],
+                                videos: [{ title: "PyTorch for Deep Learning", channel: "Daniel Bourke", url: "https://www.youtube.com/watch?v=V_xro1bcAuA" }],
+                                docs: [{ title: "PyTorch Basics", url: "https://pytorch.org/tutorials/" }],
+                                practice: {
+                                    platform: "Google Colab",
+                                    task: "Define a nn.Module.",
+                                    code: "import torch.nn as nn\nclass NeuralNet(nn.Module):\n  def __init__(self):\n    super().__init__()\n    self.layer1 = nn.Linear(784, 128)"
+                                },
+                                checklist: ["Understand Tensor shapes.", "Trained a PyTorch Model."]
+                            },
+                            {
+                                dayNum: 4,
+                                title: "Transformers & LLMs (Karpathy Course)",
+                                hours: [
+                                    { time: "08:00 - 10:00", type: "Theory", desc: "Attention mechanism, Query/Key/Value matrices." },
+                                    { time: "10:00 - 14:00", type: "Video", desc: "Andrej Karpathy: Let's build GPT: from scratch." },
+                                    { time: "14:00 - 18:00", type: "Project", desc: "Build a miniature GPT model to generate Shakespearean text." }
+                                ],
+                                videos: [{ title: "Let's build GPT: from scratch", channel: "Andrej Karpathy", url: "https://www.youtube.com/watch?v=kCc8FmEb1nY" }],
+                                docs: [{ title: "Attention Is All You Need (Paper)", url: "https://arxiv.org/abs/1706.03762" }],
+                                practice: {
+                                    platform: "Python / PyTorch",
+                                    task: "Implement Self-Attention.",
+                                    code: "# Code the math: Attention(Q, K, V) = softmax(QK^T / sqrt(d_k)) V"
+                                },
+                                checklist: ["Understand Self-Attention.", "Built a character-level transformer."]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "track-3",
+                icon: "code",
+                title: "Track 3: DSA Mastery (IIT/Stanford Tier)",
+                description: "The core logic of computer science. C++, Data Structures, DP, and Graph Algorithms to pass elite tech interviews.",
+                modules: [
+                    {
+                        title: "Module 1: C++ & Memory Architecture",
+                        days: [
+                            {
+                                dayNum: 1,
+                                title: "Pointers, References & Memory",
+                                hours: [
+                                    { time: "08:00 - 12:00", type: "Theory", desc: "Stack vs Heap, Dereferencing, Memory Leaks." },
+                                    { time: "12:00 - 18:00", type: "Lab", desc: "Implement a custom Linked List from scratch using pure C++ pointers." }
+                                ],
+                                videos: [{ title: "Pointers in C/C++", channel: "mycodeschool", url: "https://www.youtube.com/watch?v=zuegQmMdy8M" }],
+                                docs: [{ title: "C++ Memory Management", url: "https://cplusplus.com/doc/tutorial/dynamic/" }],
+                                practice: {
+                                    platform: "Terminal (g++)",
+                                    task: "Write memory-safe C++.",
+                                    code: "struct Node { int data; Node* next; };\nNode* head = new Node();\n// Delete memory to prevent leaks"
+                                },
+                                checklist: ["Understand Stack vs Heap.", "Mastered Pointers."]
+                            }
+                        ]
+                    },
+                    {
+                        title: "Module 2: Advanced Algorithms",
+                        days: [
+                            {
+                                dayNum: 2,
+                                title: "Graphs (Dijkstra) & DP",
+                                hours: [
+                                    { time: "08:00 - 11:00", type: "Theory", desc: "Adjacency Lists, Memoization, BFS/DFS." },
+                                    { time: "11:00 - 18:00", type: "Lab", desc: "Solve 10 LeetCode Medium/Hard DP and Graph problems." }
+                                ],
+                                videos: [{ title: "Dynamic Programming - Learn to Solve", channel: "FreeCodeCamp", url: "https://www.youtube.com/watch?v=oBt53YbR9Kk" }],
+                                docs: [{ title: "CP-Algorithms", url: "https://cp-algorithms.com/" }],
+                                practice: {
+                                    platform: "LeetCode / VS Code",
+                                    task: "Implement Dijkstra's Algorithm.",
+                                    code: "priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;"
+                                },
+                                checklist: ["Understand Graph Traversal.", "Can optimize O(2^N) to O(N) using DP."]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "track-4",
+                icon: "smartphone",
+                title: "Track 4: App Development",
+                description: "Build iOS and Android applications natively using React Native and Expo.",
+                modules: [
+                    {
+                        title: "Module 1: Cross-Platform Mobile",
+                        days: [
+                            {
+                                dayNum: 1,
+                                title: "React Native & Expo Setup",
+                                hours: [
+                                    { time: "08:00 - 12:00", type: "Theory", desc: "Mobile architecture vs Web. Views vs Divs." },
+                                    { time: "12:00 - 18:00", type: "Project", desc: "Build a UI clone of Instagram using React Native Components." }
+                                ],
+                                videos: [{ title: "React Native Crash Course", channel: "Traversy Media", url: "https://www.youtube.com/watch?v=mJ3bGvy0WAY" }],
+                                docs: [{ title: "Expo Documentation", url: "https://docs.expo.dev/" }],
+                                practice: {
+                                    platform: "Terminal & Expo Go app",
+                                    task: "Initialize mobile app.",
+                                    code: "npx create-expo-app my-app\ncd my-app\nnpx expo start"
+                                },
+                                checklist: ["Connected app to phone via Expo Go.", "Built mobile layouts with Flexbox."]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "track-5",
+                icon: "server",
+                title: "Track 5: Systems & Cloud (Phase 1)",
+                description: "Docker, Kubernetes, Networking, Distributed DBs. (The Original Architect Phase 1).",
+                modules: [
+                    {
+                        title: "Module 1: Infrastructure as Code",
+                        days: [
+                            {
+                                dayNum: 1,
+                                title: "TCP/IP, Nginx & Docker",
+                                hours: [
+                                    { time: "08:00 - 12:00", type: "Theory", desc: "OSI Model, Load Balancing, Containerization." },
+                                    { time: "12:00 - 18:00", type: "Lab", desc: "Deploy a Node app behind an Nginx Reverse Proxy inside Docker." }
+                                ],
+                                videos: [{ title: "Docker Tutorial", channel: "NetworkChuck", url: "https://www.youtube.com/watch?v=Gjnup-PuquQ" }],
+                                docs: [{ title: "Docker Docs", url: "https://docs.docker.com/" }],
+                                practice: {
+                                    platform: "Docker / Linux",
+                                    task: "Write docker-compose.yml.",
+                                    code: "docker-compose up -d --build"
+                                },
+                                checklist: ["Understand Reverse Proxies.", "Mastered Dockerfiles."]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: "track-6",
+                icon: "shield",
+                title: "Track 6: Cybersecurity in AI Era",
+                description: "Offensive and defensive security. Protecting AI models and web servers from modern attacks.",
+                modules: [
+                    {
+                        title: "Module 1: Penetration Testing & AI Sec",
+                        days: [
+                            {
+                                dayNum: 1,
+                                title: "OWASP Top 10 & Web Exploits",
+                                hours: [
+                                    { time: "08:00 - 12:00", type: "Theory", desc: "SQLi, XSS, CSRF, Authentication bypass." },
+                                    { time: "12:00 - 18:00", type: "Lab", desc: "Use Burp Suite to intercept and modify HTTP requests safely in a sandbox." }
+                                ],
+                                videos: [{ title: "Web Security", channel: "LiveOverflow", url: "https://www.youtube.com/c/LiveOverflow" }],
+                                docs: [{ title: "OWASP Documentation", url: "https://owasp.org/Top10/" }],
+                                practice: {
+                                    platform: "Burp Suite Community Edition",
+                                    task: "Intercept HTTP traffic.",
+                                    code: "Set browser proxy to 127.0.0.1:8080. Capture request."
+                                },
+                                checklist: ["Understand XSS vs SQLi.", "Intercepted requests with proxy."]
+                            },
+                            {
+                                dayNum: 2,
+                                title: "AI/LLM Security Vulnerabilities",
+                                hours: [
+                                    { time: "08:00 - 12:00", type: "Theory", desc: "Prompt Injection, Data Poisoning, Model Inversion." },
+                                    { time: "12:00 - 18:00", type: "Lab", desc: "Build an AI App and execute a Prompt Injection attack to force it to leak a hidden 'secret key', then patch it." }
+                                ],
+                                videos: [{ title: "AI Prompt Injection Hacking", channel: "John Hammond", url: "https://www.youtube.com/watch?v=Oiv3TaIR9UY" }],
+                                docs: [{ title: "OWASP Top 10 for LLMs", url: "https://owasp.org/www-project-top-10-for-large-language-model-applications/" }],
+                                practice: {
+                                    platform: "Node.js + OpenAI API",
+                                    task: "Defend against prompt injection.",
+                                    code: "// Bad: prompt = userInput;\n// Good: prompt = 'System: You are helpful. User: ' + sanitize(userInput);"
+                                },
+                                checklist: ["Executed Prompt Injection.", "Secured LLM endpoint."]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        // RENDER LOGIC
+        function renderTabs() {
+            const tabsContainer = document.getElementById('track-tabs');
+            tabsContainer.innerHTML = degreeTracks.map((track, index) => `
+                <button onclick="renderTrack('${track.id}')" 
+                        id="tab-${track.id}"
+                        class="track-tab flex items-center gap-2 px-6 py-4 text-sm font-bold text-neutral-400 border-b-2 border-transparent hover:text-white hover:bg-neutral-900 transition-colors whitespace-nowrap ${index === 0 ? 'active' : ''}">
+                    <i data-lucide="${track.icon}" class="w-4 h-4"></i>
+                    ${track.title.split(':')[0]} <!-- Short name for tab -->
+                </button>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function renderTrack(trackId) {
+            // Update Tab Styling
+            document.querySelectorAll('.track-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(`tab-${trackId}`).classList.add('active');
+
+            const track = degreeTracks.find(t => t.id === trackId);
+            const container = document.getElementById('curriculum-container');
+
+            let html = `
+                <div class="mb-12 animate-[sweep_0.4s_ease-in-out]">
+                    <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mb-4 flex items-center gap-4">
+                        <span class="w-10 h-10 rounded bg-stanford-red flex items-center justify-center text-lg shadow-[0_0_15px_rgba(140,21,21,0.5)]">
+                            <i data-lucide="${track.icon}" class="w-5 h-5 text-white"></i>
+                        </span>
+                        ${track.title}
+                    </h2>
+                    <p class="text-lg text-neutral-400 mb-8 max-w-4xl">${track.description}</p>
+                    <div class="space-y-8">
+            `;
+
+            track.modules.forEach(block => {
+                html += `
+                    <div class="bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden shadow-2xl">
+                        <div class="bg-neutral-800/50 p-6 border-b border-neutral-800">
+                            <h3 class="text-2xl font-bold text-stanford-gold">${block.title}</h3>
+                        </div>
+                        <div class="p-6 space-y-6">
+                `;
+
+                block.days.forEach(day => {
+                    let hoursHTML = day.hours.map(h => `
+                        <div class="flex flex-col md:flex-row gap-2 md:gap-4 p-3 border-b border-neutral-800 last:border-0 hover:bg-neutral-800/30">
+                            <div class="font-mono text-xs text-neutral-500 w-32 flex-shrink-0 pt-1">${h.time}</div>
+                            <div>
+                                <span class="text-xs font-bold px-2 py-0.5 rounded border ${h.type === 'Theory' ? 'bg-purple-900/30 text-purple-400 border-purple-800' :
+                            h.type === 'Video' ? 'bg-red-900/30 text-red-400 border-red-800' :
+                                h.type === 'Lab' || h.type === 'Project' ? 'bg-green-900/30 text-green-400 border-green-800' :
+                                    'bg-blue-900/30 text-blue-400 border-blue-800'
+                        } mr-2 uppercase tracking-wide inline-block mb-1 md:mb-0">${h.type}</span>
+                                <span class="text-sm text-neutral-300">${h.desc}</span>
+                            </div>
+                        </div>
+                    `).join('');
+
+                    let videosHTML = day.videos.map(v => `
+                        <a href="${v.url}" target="_blank" class="flex items-center gap-3 p-3 bg-neutral-950 border border-neutral-800 rounded hover:border-stanford-red transition-colors group">
+                            <i data-lucide="youtube" class="w-5 h-5 text-neutral-500 group-hover:text-red-500 transition-colors"></i>
+                            <div>
+                                <div class="text-sm font-bold text-neutral-200 group-hover:text-white">${v.title}</div>
+                                <div class="text-xs text-neutral-500">${v.channel}</div>
+                            </div>
+                        </a>
+                    `).join('');
+
+                    let docsHTML = day.docs.map(d => `
+                        <a href="${d.url}" target="_blank" class="flex items-center gap-3 p-3 bg-neutral-950 border border-neutral-800 rounded hover:border-blue-500 transition-colors group">
+                            <i data-lucide="book-open" class="w-5 h-5 text-neutral-500 group-hover:text-blue-500 transition-colors"></i>
+                            <div class="text-sm font-bold text-neutral-200 group-hover:text-white">${d.title}</div>
+                        </a>
+                    `).join('');
+
+                    let checklistHTML = day.checklist.map(c => `
+                        <label class="flex items-start gap-3 cursor-pointer group/check">
+                            <input type="checkbox" class="mt-1 w-4 h-4 rounded border-neutral-700 bg-neutral-900 text-success focus:ring-success focus:ring-offset-neutral-950">
+                            <span class="text-sm text-neutral-400 group-hover/check:text-neutral-200 transition-colors">${c}</span>
+                        </label>
+                    `).join('');
+
+                    html += `
+                        <details class="group bg-neutral-950 border border-neutral-800 rounded-xl [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="flex items-center gap-4 p-5 cursor-pointer hover:bg-neutral-900 transition-colors">
+                                <div class="relative z-10" onclick="event.stopPropagation()">
+                                    <input type="checkbox" id="check-${track.id}-${day.dayNum}" class="task-checkbox hidden">
+                                    <label for="check-${track.id}-${day.dayNum}" class="w-6 h-6 rounded border-2 border-neutral-600 flex items-center justify-center cursor-pointer hover:border-success transition-colors">
+                                        <i data-lucide="check" class="w-4 h-4 text-success opacity-0 transition-opacity"></i>
+                                    </label>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-xs text-stanford-red font-bold tracking-wider uppercase mb-1">Day ${day.dayNum}</div>
+                                    <h4 class="day-title text-xl font-bold text-white group-open:text-stanford-gold transition-colors">${day.title}</h4>
+                                </div>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-neutral-500 transition-transform group-open:rotate-180"></i>
+                            </summary>
+                            
+                            <div class="p-4 md:p-6 border-t border-neutral-800 space-y-8 bg-neutral-900/50">
+                                <div>
+                                    <h5 class="text-sm font-bold text-white mb-4 flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4 text-stanford-gold"></i> 10-Hour Execution Schedule</h5>
+                                    <div class="bg-black border border-neutral-800 rounded-lg overflow-hidden">
+                                        ${hoursHTML}
+                                    </div>
+                                </div>
+
+                                <div class="grid md:grid-cols-2 gap-8">
+                                    <div class="space-y-6">
+                                        <div>
+                                            <h5 class="text-sm font-bold text-white mb-3 flex items-center gap-2"><i data-lucide="video" class="w-4 h-4 text-red-500"></i> Lecture Assignments</h5>
+                                            <div class="space-y-3">${videosHTML}</div>
+                                        </div>
+                                        <div>
+                                            <h5 class="text-sm font-bold text-white mb-3 flex items-center gap-2"><i data-lucide="library" class="w-4 h-4 text-blue-500"></i> Reading & Documentation</h5>
+                                            <div class="space-y-3">${docsHTML}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="space-y-6">
+                                        <div>
+                                            <h5 class="text-sm font-bold text-white mb-3 flex items-center gap-2"><i data-lucide="terminal-square" class="w-4 h-4 text-green-500"></i> Lab / Coding Practice</h5>
+                                            <div class="bg-black border border-neutral-800 rounded-lg p-4">
+                                                <div class="text-xs text-neutral-500 mb-2 font-bold uppercase">Platform: ${day.practice.platform}</div>
+                                                <div class="text-sm text-neutral-300 mb-4">${day.practice.task}</div>
+                                                <pre class="font-mono text-xs text-green-400 bg-neutral-950 p-3 rounded border border-neutral-800 overflow-x-auto whitespace-pre-wrap">${day.practice.code}</pre>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h5 class="text-sm font-bold text-white mb-3 flex items-center gap-2"><i data-lucide="check-square" class="w-4 h-4 text-success"></i> Daily Success Criteria</h5>
+                                            <div class="space-y-2 bg-black border border-neutral-800 rounded-lg p-4">
+                                                ${checklistHTML}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </details>
+                    `;
+                });
+                html += `</div></div>`;
+            });
+
+            html += `</div></div>`;
+            container.innerHTML = html;
+            lucide.createIcons();
+
+            // Re-apply custom style for checkboxes
+            const styleId = 'checkbox-style';
+            let styleEl = document.getElementById(styleId);
+            if (!styleEl) {
+                styleEl = document.createElement('style');
+                styleEl.id = styleId;
+                document.head.appendChild(styleEl);
+            }
+            styleEl.innerHTML = `
+                .task-checkbox:checked + label i { opacity: 1; }
+                .task-checkbox:checked + label { border-color: #10b981; }
+            `;
+        }
+
+        // Initialize App
+        renderTabs();
+        renderTrack(degreeTracks[0].id); // Load Track 1 by default
+
+    </script>
+</body>
+
+</html>
