@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useMemo } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { auth, db } from "@/lib/firebase";
 import { doc, setDoc, onSnapshot } from "firebase/firestore";
@@ -200,8 +201,14 @@ export default function RoadmapPage() {
 
   return (
     <div className="min-h-screen bg-background pb-32">
+      {!user && (
+        <div className="bg-bronze/10 border-b border-bronze/20 text-bronze text-xs font-black uppercase tracking-[0.15em] py-3.5 px-6 text-center flex items-center justify-center gap-2">
+          <Sparkles className="w-4 h-4 animate-pulse" /> Guest Mode Active: Progress tracking is temporary. <Link href="/auth" className="underline hover:text-white transition ml-1">Register an account</Link> to save progress to the cloud.
+        </div>
+      )}
+
       {/* Dynamic Header & Stats Banner */}
-      <header className="pt-24 pb-8 px-6 relative overflow-hidden border-b border-white/5">
+      <header className={cn("pb-8 px-6 relative overflow-hidden border-b border-white/5", !user ? "pt-12" : "pt-24")}>
         <div className="absolute top-0 right-0 w-[500px] h-[300px] bg-bronze/5 rounded-full blur-[120px] pointer-events-none"></div>
         <div className="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div>
