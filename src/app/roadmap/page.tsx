@@ -49,6 +49,7 @@ export default function RoadmapPage() {
   // UI States
   const [selectedVideoUrl, setSelectedVideoUrl] = useState<string>("");
   const [copiedCode, setCopiedCode] = useState(false);
+  const [mobileActiveTab, setMobileActiveTab] = useState<"syllabus" | "console">("console");
 
   // Authenticate and subscribe to database
   useEffect(() => {
@@ -347,10 +348,32 @@ export default function RoadmapPage() {
           </div>
         )}
 
+        {/* Mobile View Toggle Tabs */}
+        <div className="lg:hidden flex gap-3 mb-6">
+          <button 
+            onClick={() => setMobileActiveTab("syllabus")}
+            className={cn(
+              "flex-1 py-3.5 text-xs font-black uppercase tracking-widest rounded-2xl border text-center transition-all cursor-pointer",
+              mobileActiveTab === "syllabus" ? "bg-white/5 border-bronze/30 text-white" : "bg-black/40 border-white/5 text-neutral-500 hover:text-neutral-300"
+            )}
+          >
+            Syllabus Index
+          </button>
+          <button 
+            onClick={() => setMobileActiveTab("console")}
+            className={cn(
+              "flex-1 py-3.5 text-xs font-black uppercase tracking-widest rounded-2xl border text-center transition-all cursor-pointer",
+              mobileActiveTab === "console" ? "bg-white/5 border-bronze/30 text-white" : "bg-black/40 border-white/5 text-neutral-500 hover:text-neutral-300"
+            )}
+          >
+            Learning Console
+          </button>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* Left Panel: Modular Selector Tree */}
-          <div className="lg:col-span-4 space-y-6">
+          <div className={cn("lg:col-span-4 space-y-6", mobileActiveTab === "syllabus" ? "block" : "hidden lg:block")}>
             
             {/* Track Selector Card */}
             <div className="glass p-5 rounded-[32px] border-white/5">
@@ -432,6 +455,7 @@ export default function RoadmapPage() {
                             onClick={() => {
                               setActiveModuleIdx(mIdx);
                               setActiveDayNum(day.dayNum);
+                              setMobileActiveTab("console");
                             }}
                             className={cn(
                               "w-full flex items-center justify-between p-3 rounded-xl transition-all text-xs font-bold text-left",
@@ -467,7 +491,7 @@ export default function RoadmapPage() {
           </div>
 
           {/* Right Panel: Integrated Syllabus Console */}
-          <div className="lg:col-span-8 space-y-6">
+          <div className={cn("lg:col-span-8 space-y-6", mobileActiveTab === "console" ? "block" : "hidden lg:block")}>
             
             {activeDay ? (
               <div className="glass rounded-[40px] border-white/5 overflow-hidden flex flex-col min-h-[600px]">
