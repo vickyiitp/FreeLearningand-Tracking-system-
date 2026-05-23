@@ -44,8 +44,8 @@ export default function AuthPage() {
     let message = error.message || "An authentication error occurred.";
     
     // Friendly diagnostics for common configuration errors
-    if (error.code === "auth/operation-not-allowed") {
-      message = "Error: This authentication provider is not enabled. Please log in to your Firebase Console -> Authentication -> Sign-in Method, and enable Google / GitHub providers for 'threadgenius-8f84w'.";
+    if (error.code === "auth/operation-not-allowed" || error.code === "auth/configuration-not-found") {
+      message = "Error: This authentication provider is not enabled. Please log in to your Firebase Console (https://console.firebase.google.com/) -> project 'threadgenius-8f84w' -> Authentication -> Sign-in Method, and enable Google / GitHub providers.";
     } else if (error.code === "auth/operation-not-supported-in-this-environment") {
       message = "Popup-based authentication is not supported in this browser environment. Attempting page redirect login instead...";
     } else if (error.code === "auth/popup-blocked") {
