@@ -52,6 +52,10 @@ h1, h2, h3, .font-artistic {
   background: linear-gradient(135deg, #B87333 0%, #CD7F32 50%, #8B4513 100%);
 }
 
+.bronze-gradient-subtle {
+  background: linear-gradient(135deg, rgba(184, 115, 51, 0.1) 0%, rgba(205, 127, 50, 0.2) 50%, rgba(139, 69, 19, 0.1) 100%);
+}
+
 .text-gradient {
   background: linear-gradient(to right, #CD7F32, #E3A869);
   -webkit-background-clip: text;

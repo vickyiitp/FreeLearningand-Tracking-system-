@@ -11,31 +11,64 @@ export default function AdminDashboard() {
   const [earningsData, setEarningsData] = useState<any[]>([]);
   const [challengeData, setChallengeData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [currentUser, setCurrentUser] = useState<any>(null);
+
+  const ADMIN_EMAIL = "vickyykumar14@gmail.com";
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch Users
-        const userSnap = await getDocs(collection(db, "users"));
-        setUsersData(userSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-
-        // Fetch Earnings
-        const earnSnap = await getDocs(collection(db, "earnings"));
-        setEarningsData(earnSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-
-        // Fetch Challenges
-        const chalSnap = await getDocs(collection(db, "challenges"));
-        setChallengeData(chalSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user && user.email === ADMIN_EMAIL) {
+        setIsAdmin(true);
+        setCurrentUser(user);
+        fetchData();
+      } else {
+        setIsAdmin(false);
         setLoading(false);
       }
-    };
-
-    fetchData();
+    });
+    return () => unsubscribe();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      // Fetch Users
+      const userSnap = await getDocs(collection(db, "users"));
+      setUsersData(userSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+
+      // Fetch Earnings
+      const earnSnap = await getDocs(collection(db, "earnings"));
+      setEarningsData(earnSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+
+      // Fetch Challenges
+      const chalSnap = await getDocs(collection(db, "challenges"));
+      setChallengeData(chalSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) return (
+    <div className="min-h-screen flex items-center justify-center">
+       <div className="w-12 h-12 border-4 border-bronze border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  );
+
+  if (!isAdmin) return (
+    <div className="min-h-screen flex flex-col items-center justify-center text-center px-6">
+       <ShieldAlert className="w-20 h-20 text-red-500 mb-6" />
+       <h1 className="text-4xl font-black text-white mb-4 uppercase tracking-tighter">Restricted Access</h1>
+       <p className="text-neutral-500 max-w-md font-medium leading-relaxed">
+         This sector is restricted to the Lead Architect. Unauthorized surveillance is prohibited. 
+         Please log in with the admin credentials to proceed.
+       </p>
+       <a href="/auth" className="mt-8 px-8 py-3 bg-white text-black font-black uppercase tracking-widest rounded-2xl hover:bg-neutral-200 transition">Return to Base</a>
+    </div>
+  );
 
   const totalRevenue = earningsData.reduce((acc, curr) => {
     const days = curr.days || [];

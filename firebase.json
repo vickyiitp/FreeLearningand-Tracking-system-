@@ -3,7 +3,6 @@
     "rules": "firestore.rules"
   },
   "hosting": {
-    "site": "threadgenius-8f84w",
     "public": "out",
     "ignore": [
       "firebase.json",
