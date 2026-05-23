@@ -741,7 +741,7 @@ export default function RoadmapPage() {
                               </span>
                               <div className="flex gap-1.5">
                                 <div className="w-2 h-2 rounded-full bg-red-500/50"></div>
-                                <div className="w-2 h-2 rounded-full bg-yellow-500/50"></div>
+                                <div className="w-2 h-2 rounded-full bg-bronze/50"></div>
                                 <div className="w-2 h-2 rounded-full bg-emerald-500/50"></div>
                               </div>
                             </div>

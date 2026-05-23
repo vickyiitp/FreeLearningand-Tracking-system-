@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display, Fira_Code } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
-const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-serif" });
-const fira = Fira_Code({ subsets: ["latin"], variable: "--font-mono" });
-
 export const metadata: Metadata = {
-  title: "The MVA Platform | Code, Build, Earn",
-  description: "Elite Engineer Roadmap, 100-Day Earnings Challenge, and Professional Planner by vickyiitp.",
+  title: "VMVA Platform | Learn Tech, Build Products, Track Revenue",
+  description: "Elite Engineer Syllabus, 100-Day Earnings Challenge, and Professional Planner by Vicky IITP.",
 };
 
 export default function RootLayout({
@@ -22,8 +17,11 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" href="/favicon.ico" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Inter:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
       </head>
-      <body className={`${inter.variable} ${playfair.variable} ${fira.variable} antialiased`}>
+      <body className="antialiased">
         <Navbar />
         <main className="min-h-screen pt-20">
           {children}
